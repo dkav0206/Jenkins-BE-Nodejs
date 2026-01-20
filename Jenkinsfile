@@ -12,7 +12,7 @@ pipeline {
                 withCredentials([
                     usernamePassword(
                         credentialsId: '05053c55-9677-4f9c-bc73-bb0573d929aa', 
-                        usernameVariable: 'USER', 
+                        usernameVariable: 'USER-git', 
                         passwordVariable: 'PASS'
                     ),
                     sshUserPrivateKey(
