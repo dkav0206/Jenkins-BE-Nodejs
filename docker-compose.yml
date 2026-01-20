@@ -1,0 +1,7 @@
+version: "3"
+services:
+  backend-nodejs:
+    build: .
+    container_name: cons-nodejs
+    ports:
+      - "8088:8088"
