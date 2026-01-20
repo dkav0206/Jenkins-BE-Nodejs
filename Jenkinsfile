@@ -1,30 +1,29 @@
 pipeline {
     agent any
 
-    stages {
-        stage('Hello') {
-            steps {
-                echo 'Hello World'
-            }
-        }
-        stage('log credential') {
-            steps {
+    environment {
+        DEPLOY_PATH = '/root/Jenkins-BE-Nodejs'
+    }
+
+    stages{
+        stage('Deploy nodejs'){
+            steps{
                 withCredentials([
-                    usernamePassword(
-                        credentialsId: '05053c55-9677-4f9c-bc73-bb0573d929aa', 
-                        usernameVariable: 'USER-git', 
-                        passwordVariable: 'PASS'
-                    ),
                     sshUserPrivateKey(
                         credentialsId: '33049699-b31d-4db0-827e-f107c592cced',
                         keyFileVariable: 'KEY',
                         usernameVariable: 'USER',
                     )
                 ]){
-                  echo "Username: ${USER}"
-                  echo "Password: ${PASS}"
+                    sh """
+                        ssh -o StrictHostKeyChecking=no -i ${KEY} ${USER}@134.199.154.72 '
+                            cd ${DEPLOY_PATH} && git pull
+                            docker-compose down
+                            docker-compose build
+                            docker-compose up -d 
+                        '
+                    """
                 }
-                
             }
         }
     }

@@ -5,7 +5,7 @@ const app = express()
 app.listen(8088)
 
 app.get("/", (req, res) => {
-    res.send("Đây là trang chủ API");
+    res.send("Đây là trang chủ API v2");
 })
 
 app.get("/get-product", (req, res) => {
